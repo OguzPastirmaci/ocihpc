@@ -56,3 +56,7 @@ create_stack(){
   CREATED_STACK_ID=$(oci resource-manager stack create --compartment-id $COMPARTMENT_ID --config-source $ZIP_FILE_PATH --query 'data.id' --raw-output)
   echo "Created stack id: ${CREATED_STACK_ID}"
 }
+
+validate_url(){
+  if [[ `wget -S --spider $1  2>&1 | grep 'HTTP/1.1 200 OK'` ]]; then echo "true"; fi
+}
