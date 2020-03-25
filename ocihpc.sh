@@ -13,7 +13,8 @@ Usage: $cli_name [command]
 
 Commands:
   deploy    Deploy an HPC solution
-  list      List deployed solutions in a compartment
+  delete    Delete a deployed HPC solution
+  list      List available solutions for deployment
 "
   exit 1
 }
