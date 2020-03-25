@@ -20,5 +20,5 @@ Commands:
 
 echo "List of available packages:"
 echo ""
-echo "$(curl -s https://raw.githubusercontent.com/OguzPastirmaci/ocihpc/master/catalog)"
+echo "$(curl -s https://raw.githubusercontent.com/OguzPastirmaci/ocihpc/master/packages/catalog)"
 echo ""
