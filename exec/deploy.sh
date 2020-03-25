@@ -19,7 +19,7 @@ Commands:
 
 export PACKAGE=$1
 ZIP_FILE_PATH="$OCIHPC_WORKDIR/downloaded-packages/$PACKAGE/$PACKAGE.zip"
-URL="https://github.com/OguzPastirmaci/ocihpc/raw/master/packages/$PACKAGE.zip"
+URL="https://github.com/OguzPastirmaci/ocihpc/raw/master/packages/$PACKAGE/$PACKAGE.zip"
 
 if curl --head --silent --fail $URL > /dev/null;
  then
