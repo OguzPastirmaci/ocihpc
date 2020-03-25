@@ -41,22 +41,3 @@ export_config() {
    OCI_REGION=""
    OCI_KEY_FILE=""
 }
-
-ZIP_FILE_PATH="$OCIHPC_WORKDIR/packages/$PACKAGE.zip"
-
-download_package(){
-  echo "Downlading package: $PACKAGE"
- [ ! -d "$OCIHPC_WORKDIR/packages" ] && mkdir "$OCIHPC_WORKDIR/packages"
- cd $OCIHPC_WORKDIR/packages
- [ ! -f "$ZIP_FILE_PATH" ] && wget -q -N https://github.com/OguzPastirmaci/ocihpc/blob/master/$PACKAGE.zip
-}
-
-create_stack(){
-  echo "Creating stack: $PACKAGE"
-  CREATED_STACK_ID=$(oci resource-manager stack create --compartment-id $COMPARTMENT_ID --config-source $ZIP_FILE_PATH --query 'data.id' --raw-output)
-  echo "Created stack id: ${CREATED_STACK_ID}"
-}
-
-validate_url(){
-  if [[ `wget -S --spider $1  2>&1 | grep 'HTTP/1.1 200 OK'` ]]; then echo "true"; fi
-}
