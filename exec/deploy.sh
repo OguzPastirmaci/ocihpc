@@ -13,7 +13,6 @@ Usage: $cli_name [command]
 
 Commands:
   create    Create a deployment
-  *         Help
 "
   exit 1
 }
@@ -39,8 +38,9 @@ fi
 
 echo "Creating stack: $PACKAGE"
 echo ""
-CREATED_STACK_ID=$(oci resource-manager stack create --compartment-id $COMPARTMENT_ID --display-name ${PACKAGE}-easydeploy-stack --config-source $ZIP_FILE_PATH --query 'data.id' --raw-output)
+CREATED_STACK_ID=$(oci resource-manager stack create --compartment-id $COMPARTMENT_ID --display-name ${PACKAGE}-EasyDeploy-Stack --config-source $ZIP_FILE_PATH --query 'data.id' --raw-output)
 echo "Created stack id: ${CREATED_STACK_ID}"
+echo "STACK_ID = ${CREATED_STACK_ID}" >> $OCIHPC_WORKDIR/downloaded-packages/$PACKAGE/.$PACKAGE.info
 echo ""
 
 echo "Creating Plan Job"
