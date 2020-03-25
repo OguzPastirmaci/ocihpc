@@ -19,16 +19,16 @@ Commands:
 }
 
 export PACKAGE=$1
-ZIP_FILE_PATH="$OCIHPC_WORKDIR/packages/$PACKAGE.zip"
+ZIP_FILE_PATH="$OCIHPC_WORKDIR/downloaded-packages/$PACKAGE/$PACKAGE.zip"
+URL="https://github.com/OguzPastirmaci/ocihpc/raw/master/packages/$PACKAGE.zip"
 
-if curl --head --silent --fail https://github.com/OguzPastirmaci/ocihpc/raw/master/packages/$PACKAGE.zip 2> /dev/null;
+if curl --head --silent --fail $URL > /dev/null;
  then
   echo ""
   echo "Downlading package: $PACKAGE"
   echo ""
-   [ ! -d "$OCIHPC_WORKDIR/packages" ] && mkdir "$OCIHPC_WORKDIR/packages/$PACKAGE"
-   cd $OCIHPC_WORKDIR/packages/$PACKAGE
-   [ ! -f "$ZIP_FILE_PATH" ] && curl -s https://github.com/OguzPastirmaci/ocihpc/raw/master/packages/$PACKAGE.zip
+  [ ! -d "$OCIHPC_WORKDIR/downloaded-packages/$PACKAGE" ] && mkdir -p "$OCIHPC_WORKDIR/downloaded-packages/$PACKAGE"
+  [ ! -f "$ZIP_FILE_PATH" ] && curl -sL $URL -o $OCIHPC_WORKDIR/downloaded-packages/$PACKAGE/$PACKAGE.zip  > /dev/null
  else
   echo ""
   echo "The package $PACKAGE does not exist."
@@ -36,7 +36,7 @@ if curl --head --silent --fail https://github.com/OguzPastirmaci/ocihpc/raw/mast
   $OCIHPC_WORKDIR/ocihpc.sh list
   exit
 fi
-  
+
 echo "Creating stack: $PACKAGE"
 echo ""
 CREATED_STACK_ID=$(oci resource-manager stack create --compartment-id $COMPARTMENT_ID --display-name ${PACKAGE}-easydeploy-stack --config-source $ZIP_FILE_PATH --query 'data.id' --raw-output)
