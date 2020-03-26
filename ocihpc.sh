@@ -1,6 +1,5 @@
 #!/bin/bash
 export OCIHPC_WORKDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-# export COMPARTMENT_ID="ocid1.compartment.oc1..aaaaaaaafxezajxlyjxkh23ux75iqttja2qvdded3fc3v5h4kth6zvhnus3q"
 
 source "$OCIHPC_WORKDIR/common/util.sh"
 
