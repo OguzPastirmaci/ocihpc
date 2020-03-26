@@ -20,16 +20,16 @@ Commands:
 
 case "$1" in
   init)
-    "$OCIHPC_WORKDIR/exec/init.sh" "$2" | tee -ia "$OCIHPC_WORKDIR/init_${2}.log"
+    "$OCIHPC_WORKDIR/exec/init.sh" "$2"
     ;;
   deploy)
-    "$OCIHPC_WORKDIR/exec/deploy.sh" "$2" | tee -ia "$OCIHPC_WORKDIR/deploy_${2}.log"
+    "$OCIHPC_WORKDIR/exec/deploy.sh" "$2"
     ;;
   delete)
-    "$OCIHPC_WORKDIR/exec/delete.sh" "$2" | tee -ia "$OCIHPC_WORKDIR/delete${2}.log"
+    "$OCIHPC_WORKDIR/exec/delete.sh" "$2"
     ;;
   list)
-    "$OCIHPC_WORKDIR/exec/list.sh" "$2" | tee -ia "$OCIHPC_WORKDIR/list_${2}.log"
+    "$OCIHPC_WORKDIR/exec/list.sh" "$2"
     ;;  
   *)
     usage
