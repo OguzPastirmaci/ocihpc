@@ -31,8 +31,10 @@ if curl --head --silent --fail $ZIP_FILE_URL > /dev/null;
   echo ""
   [ ! -d "$OCIHPC_WORKDIR/downloaded-packages/$PACKAGE" ] && mkdir -p "$OCIHPC_WORKDIR/downloaded-packages/$PACKAGE"
   [ ! -f "$ZIP_FILE_PATH" ] && curl -sL $ZIP_FILE_URL -o $OCIHPC_WORKDIR/downloaded-packages/$PACKAGE/$PACKAGE.zip  > /dev/null
-  [ ! -f "$CONFIG_FILE_PATH" ] && curl -sL $CONFIG_FILE_URL -o $OCIHPC_WORKDIR/downloaded-packages/$PACKAGE/config.json  > /dev/null
+  [ ! -f "$CONFIG_FILE_PATH" ] && curl -s $CONFIG_FILE_URL -o $OCIHPC_WORKDIR/downloaded-packages/$PACKAGE/config.json  > /dev/null
   echo "Package $PACKAGE downloaded to $OCIHPC_WORKDIR/downloaded-packages/$PACKAGE"
+  echo ""
+  echo "Edit the contents of the $OCIHPC_WORKDIR/downloaded-packages/$PACKAGE/config.json file before running deploy"
   echo ""
  else
   echo ""
