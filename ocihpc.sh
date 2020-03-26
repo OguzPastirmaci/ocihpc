@@ -11,6 +11,7 @@ Oracle Cloud Infrastructure Easy HPC Deploy
 Usage: $cli_name [command]
 
 Commands:
+  init      Initialize deployment of an HPC solution
   deploy    Deploy an HPC solution
   delete    Delete a deployed HPC solution
   list      List available solutions for deployment
