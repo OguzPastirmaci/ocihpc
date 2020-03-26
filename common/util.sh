@@ -38,9 +38,7 @@ cli_log() {
 }
 
 export_config() {
-   OCI_USER_ID=""
-   OCI_TENANCY_ID=""
-   OCI_FINGERPRINT=""
-   OCI_REGION=""
-   OCI_KEY_FILE=""
+   export OCI_USER_ID=$(awk -F'user=' '{print $2}' ~/.oci/config  | xargs)
+   export OCI_TENANCY_ID=$(awk -F'tenancy=' '{print $2}' ~/.oci/config  | xargs)
+   export OCI_REGION=$(awk -F'region=' '{print $2}' ~/.oci/config  | xargs)
 }

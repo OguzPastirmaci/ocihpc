@@ -36,6 +36,7 @@ if curl --head --silent --fail $URL > /dev/null;
   exit
 fi
 
+export_config
 echo "Creating stack: $PACKAGE"
 echo ""
 CREATED_STACK_ID=$(oci resource-manager stack create --compartment-id $COMPARTMENT_ID --display-name ${PACKAGE}-EasyDeploy-Stack --config-source $ZIP_FILE_PATH --query 'data.id' --raw-output)
@@ -45,6 +46,8 @@ echo ""
 
 echo "Creating Plan Job"
 echo ""
-CREATED_PLAN_JOB_ID=$(oci resource-manager job create-plan-job --stack-id $CREATED_STACK_ID --query 'data.id' --raw-output)
+CREATED_PLAN_JOB_ID=$(oci resource-manager job create-plan-job --stack-id $CREATED_STACK_ID --wait-for-state SUCCEEDED --wait-for-state FAILED --query 'data.id' --raw-output)
 echo "Created Plan Job id: ${CREATED_PLAN_JOB_ID}"
+echo "Checking if Job has succeded..."
 echo ""
+echo "Job has $(oci resource-manager job get --job-id ${CREATED_PLAN_JOB_ID} --query 'data."lifecycle-state"' --raw-output)"
