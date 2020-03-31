@@ -23,7 +23,7 @@ Commands:
 
 STACK_ID=$(cat $OCIHPC_WORKDIR/downloaded-packages/$PACKAGE/.info | cut -d' ' -f2)
 
-echo "Creating Destroy Job"
+echo -e "\nCreating Destroy Job"
 CREATED_DESTROY_JOB_ID=$(oci resource-manager job create-destroy-job --stack-id $STACK_ID --execution-plan-strategy=AUTO_APPROVED --query 'data.id' --raw-output)
 echo -e "\nCreated Destroy Job Id: ${CREATED_DESTROY_JOB_ID}"
 echo -e "\nWaiting for job to complete...\n"

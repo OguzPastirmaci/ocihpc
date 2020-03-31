@@ -29,9 +29,9 @@ echo -e "\nCreating stack: $PACKAGE"
 CREATED_STACK_ID=$(oci resource-manager stack create --display-name "${PACKAGE}-EasyDeploy" --config-source $ZIP_FILE_PATH --from-json file://$CONFIG_FILE_PATH --query 'data.id' --raw-output)
 echo -e "\nCreated stack id: ${CREATED_STACK_ID}"
 echo "STACK_ID=${CREATED_STACK_ID}" > $OCIHPC_WORKDIR/downloaded-packages/$PACKAGE/.info
-echo -e "\nCreating Plan Job"
-CREATED_PLAN_JOB_ID=$(oci resource-manager job create-plan-job --stack-id $CREATED_STACK_ID --query 'data.id' --raw-output)
-echo -e "\nCreated Plan Job id: ${CREATED_PLAN_JOB_ID}"
+echo -e "\nDeploying $PACKAGE"
+CREATED_PLAN_JOB_ID=$(oci resource-manager job create-apply-job --stack-id $CREATED_STACK_ID --execution-plan-strategy AUTO_APPROVED --query 'data.id' --raw-output)
+echo -e "\nCreated Apply Job id: ${CREATED_PLAN_JOB_ID}"
 echo -e "\nWaiting for job to complete..."
 
 while ! [[ $JOB_STATUS =~ ^(SUCCEEDED|FAILED) ]]
@@ -40,3 +40,5 @@ do
 done
 
 echo -e "\nJob has $(oci resource-manager job get --job-id ${CREATED_PLAN_JOB_ID} --query 'data."lifecycle-state"' --raw-output)\n"
+
+echo "STACK_IP=$(oci resource-manager job get-job-tf-state --file - --job-id $CREATED_PLAN_JOB_ID | awk -F\" '/ip_addresses.0/{print $4; exit}')" >> $OCIHPC_WORKDIR/downloaded-packages/$PACKAGE/.info
