@@ -28,20 +28,14 @@ CONFIG_FILE_URL="https://raw.githubusercontent.com/OguzPastirmaci/ocihpc/master/
 
 if curl --head --silent --fail $ZIP_FILE_URL > /dev/null;
  then
-  echo ""
-  echo "Downlading package: $PACKAGE"
-  echo ""
+  echo -e "\nDownlading package: $PACKAGE"
   [ ! -d "$OCIHPC_WORKDIR/downloaded-packages/$PACKAGE" ] && mkdir -p "$OCIHPC_WORKDIR/downloaded-packages/$PACKAGE"
   [ ! -f "$ZIP_FILE_PATH" ] && curl -sL $ZIP_FILE_URL -o $ZIP_FILE_PATH > /dev/null
   [ ! -f "$CONFIG_FILE_PATH" ] && curl -s $CONFIG_FILE_URL -o $CONFIG_FILE_PATH  > /dev/null
-  echo "Package $PACKAGE downloaded to $OCIHPC_WORKDIR/downloaded-packages/$PACKAGE"
-  echo ""
-  echo "Edit the contents of the $OCIHPC_WORKDIR/downloaded-packages/$PACKAGE/config.json file before running deploy"
-  echo ""
+  echo -e "\nPackage $PACKAGE downloaded to $OCIHPC_WORKDIR/downloaded-packages/$PACKAGE"
+  echo -e "\nIMPORTANT: Edit the contents of the $OCIHPC_WORKDIR/downloaded-packages/$PACKAGE/config.json file before running ocihpc deploy command\n"
  else
-  echo ""
-  echo "The package $PACKAGE does not exist."
-  echo ""
+  echo -e "\nThe package $PACKAGE does not exist.\n"
   $OCIHPC_WORKDIR/ocihpc.sh list
   exit
 fi

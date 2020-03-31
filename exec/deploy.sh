@@ -20,29 +20,23 @@ Usage: $cli_name [command]
 Commands:
   deploy    Create a deployment
 "
-  exit 1
+  exit 1 
 }
 
-echo ""
-echo "Creating stack: $PACKAGE"
-echo ""
+[ ! -d "$OCIHPC_WORKDIR/downloaded-packages/$PACKAGE" ] && echo -e "\nPackage is not initialized. Please run 'ocihpc init $PACKAGE'.\n" && exit 1
+
+echo -e "\nCreating stack: $PACKAGE"
 CREATED_STACK_ID=$(oci resource-manager stack create --display-name "${PACKAGE}-EasyDeploy" --config-source $ZIP_FILE_PATH --from-json file://$CONFIG_FILE_PATH --query 'data.id' --raw-output)
-echo "Created stack id: ${CREATED_STACK_ID}"
+echo -e "\nCreated stack id: ${CREATED_STACK_ID}"
 echo "STACK_ID=${CREATED_STACK_ID}" > $OCIHPC_WORKDIR/downloaded-packages/$PACKAGE/.info
-echo ""
-echo "Creating Plan Job"
-echo ""
+echo -e "\nCreating Plan Job"
 CREATED_PLAN_JOB_ID=$(oci resource-manager job create-plan-job --stack-id $CREATED_STACK_ID --query 'data.id' --raw-output)
-echo ""
-echo "Created Plan Job id: ${CREATED_PLAN_JOB_ID}"
-echo ""
-echo "Waiting for job to complete..."
-echo ""
+echo -e "\nCreated Plan Job id: ${CREATED_PLAN_JOB_ID}"
+echo -e "\nWaiting for job to complete..."
 
 while ! [[ $JOB_STATUS =~ ^(SUCCEEDED|FAILED) ]]
 do
-sleep 5
-JOB_STATUS=$(oci resource-manager job get --job-id ${CREATED_PLAN_JOB_ID} --query 'data."lifecycle-state"' --raw-output)
+  JOB_STATUS=$(oci resource-manager job get --job-id ${CREATED_PLAN_JOB_ID} --query 'data."lifecycle-state"' --raw-output)
 done
 
-echo "Job has $(oci resource-manager job get --job-id ${CREATED_PLAN_JOB_ID} --query 'data."lifecycle-state"' --raw-output)"
+echo -e "\nJob has $(oci resource-manager job get --job-id ${CREATED_PLAN_JOB_ID} --query 'data."lifecycle-state"' --raw-output)\n"

@@ -18,7 +18,5 @@ Commands:
   exit 1
 }
 
-echo "List of available packages:"
-echo ""
-echo "$(curl -s https://raw.githubusercontent.com/OguzPastirmaci/ocihpc/master/packages/catalog)"
-echo ""
+echo -e "\nList of available packages:\n"
+echo -e "$(curl -s https://raw.githubusercontent.com/OguzPastirmaci/ocihpc/master/packages/catalog)\n"
