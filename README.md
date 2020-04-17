@@ -1,6 +1,8 @@
 # Easy HPC deployment tool - ocihpc
 
-Usage
+`ocihpc` is a tool for simplifying deployments of HPC application in Oracle Cloud Infrastructure (OCI).
+
+
 
 ### 1 - List
 You can get the list of available packages by running `ocihpc.sh list`.
@@ -8,7 +10,7 @@ You can get the list of available packages by running `ocihpc.sh list`.
 Example:
 
 ```sh
-$ ocihpc list
+$ ocihpc.sh list
 
 List of available packages:
 
