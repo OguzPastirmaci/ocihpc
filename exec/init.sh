@@ -36,6 +36,6 @@ if curl --head --silent --fail $ZIP_FILE_URL > /dev/null;
   echo -e "\nIMPORTANT: Edit the contents of the $OCIHPC_WORKDIR/downloaded-packages/$PACKAGE/config.json file before running ocihpc deploy command\n"
  else
   echo -e "\nThe package $PACKAGE does not exist.\n"
-  $OCIHPC_WORKDIR/ocihpc list
+  $OCIHPC_WORKDIR/ocihpc.sh list
   exit
 fi
