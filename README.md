@@ -1,4 +1,4 @@
-# ocihpc
+# Easy HPC deployment tool - ocihpc
 
 Usage
 
