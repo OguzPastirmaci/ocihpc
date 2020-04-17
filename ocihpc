@@ -27,6 +27,9 @@ case "$1" in
   deploy)
     "$OCIHPC_WORKDIR/exec/deploy.sh" "$2"
     ;;
+  connect)
+    "$OCIHPC_WORKDIR/exec/connect.sh" "$2"
+    ;;
   delete)
     "$OCIHPC_WORKDIR/exec/delete.sh" "$2"
     ;;

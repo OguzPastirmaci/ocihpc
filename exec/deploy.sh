@@ -39,6 +39,15 @@ do
   JOB_STATUS=$(oci resource-manager job get --job-id ${CREATED_PLAN_JOB_ID} --query 'data."lifecycle-state"' --raw-output)
 done
 
-echo -e "\nJob has $(oci resource-manager job get --job-id ${CREATED_PLAN_JOB_ID} --query 'data."lifecycle-state"' --raw-output)\n"
 
-echo "STACK_IP=$(oci resource-manager job get-job-tf-state --file - --job-id $CREATED_PLAN_JOB_ID | awk -F\" '/ip_addresses.0/{print $4; exit}')" >> $OCIHPC_WORKDIR/downloaded-packages/$PACKAGE/.info
+if [[ $JOB_STATUS == SUCCEEDED ]]
+then
+  STACK_IP=$(oci resource-manager job get-job-tf-state --file - --job-id $CREATED_PLAN_JOB_ID | awk -F\" '/ip_addresses.0/{print $4; exit}') >> $OCIHPC_WORKDIR/downloaded-packages/$PACKAGE/.info
+  echo "STACK_IP=$STACK_IP" >> $OCIHPC_WORKDIR/downloaded-packages/$PACKAGE/.info
+  echo -e "\nJob has $JOB_STATUS"
+  echo -e "\nYou can connect to your OpenFOAM instance using the IP: $STACK_IP\n"
+else
+  echo -e "Deployment failed. Please check logs."
+fi
+
+

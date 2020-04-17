@@ -21,7 +21,7 @@ Commands:
 }
 
 
-STACK_ID=$(cat $OCIHPC_WORKDIR/downloaded-packages/$PACKAGE/.info | cut -d' ' -f2)
+STACK_ID=$(awk -F'STACK_ID=' '{print $2}' $OCIHPC_WORKDIR/downloaded-packages/$PACKAGE/.info | xargs)
 
 echo -e "\nCreating Destroy Job"
 CREATED_DESTROY_JOB_ID=$(oci resource-manager job create-destroy-job --stack-id $STACK_ID --execution-plan-strategy=AUTO_APPROVED --query 'data.id' --raw-output)
@@ -34,8 +34,7 @@ do
   JOB_STATUS=$(oci resource-manager job get --job-id ${CREATED_DESTROY_JOB_ID} --query 'data."lifecycle-state"' --raw-output)
 done
 
-echo "Job has $(oci resource-manager job get --job-id ${CREATED_PLAN_JOB_ID} --query 'data."lifecycle-state"' --raw-output)"
-
-echo "Deleting Stack"
+echo "Delete job has $JOB_STATUS"
+echo -e "\nDeleting Stack"
 oci resource-manager stack delete --stack-id $STACK_ID --force
-echo "Deleted Stack Id: $STACK_ID"
+echo "\nSuccesfuly deleted Stack Id: $STACK_ID"
